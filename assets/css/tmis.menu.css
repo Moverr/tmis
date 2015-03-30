@@ -1,0 +1,64 @@
+/* CSS Document */
+
+#menucontainer {
+	padding-right: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	min-width: 250px;
+	width: 1%;
+	border-right: solid 1px #F0F0F0;
+	vertical-align:top;
+}
+
+.bodyspace {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+#menucontainer div {
+	cursor:pointer;
+}
+
+#menucontainer .item {
+	margin-bottom: 3px;
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 17px;
+	font-weight:600;
+}
+
+#menucontainer .item.selected {
+	border: solid 1px #00698C;
+}
+
+
+#menucontainer .item.selected .header {
+	background: url(../../assets/images/pointer_white.png) no-repeat left center #00698C;
+	padding: 7px 5px 7px 28px;
+	color: #E4E4E4;
+}
+
+#menucontainer .item .header {
+	background: url(../../assets/images/pointer_grey.png) no-repeat left center #F3F3F3;
+	padding: 7px 5px 7px 28px;
+	color: #707172;
+}
+
+#menucontainer .item div:not(.header) {
+	padding: 7px 5px 7px 28px;
+	color: #707172;
+	display:none;
+}
+
+#menucontainer .item.selected div:not(.header) {
+	padding: 7px 5px 7px 28px;
+	color: #00688C;
+	display:block;
+}
+
+#menucontainer .item.selected div:not(.header).selected {
+	padding: 7px 5px 7px 28px;
+	color: #000000;
+	cursor:text;
+}
+
+

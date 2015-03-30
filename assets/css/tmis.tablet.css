@@ -1,0 +1,21 @@
+/* CSS Document */
+
+#registration_form_btn_only {
+	display:block;
+}
+
+#registration_form, .centrallinks, #mobilebuttons {
+	display:none;
+}
+
+
+.findfield {
+	width: 80%;
+}
+
+.listsearchfield {
+	float:left;
+}
+
+
+

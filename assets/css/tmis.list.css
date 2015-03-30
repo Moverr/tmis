@@ -1,0 +1,294 @@
+/* CSS Document */
+
+.listtable {
+	width: 100%;
+	padding: 0px;
+}
+
+.listtable .rowcontent {
+	padding-bottom: 5px;
+}
+
+.listtable .rowcontent .header, .listtable .header td {
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 18px;
+	font-weight:600;
+}
+
+.listtable tr.listrow:nth-child(odd) td {
+	background-color: #F0F0F0;
+}
+
+.listtable td {
+	padding: 5px 15px 10px 15px;
+}
+
+.listtable .leftnote {
+	display:inline-block;
+	float: left;
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 14px;
+	color:#999999;
+	font-weight:400;
+}
+
+.listtable .rightnote {
+	display:inline-block;
+	float: right;
+	background: url(../../assets/images/bullet.png) no-repeat left center;
+	padding-left: 25px;
+}
+
+.reducecolumnwidth {
+	padding-right: 0px;
+	padding-left: 0px;
+	vertical-align: top;
+}
+
+.approverow {
+	background: url(../../assets/images/approve_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.approverow:hover, .approverow.active {
+	background: url(../../assets/images/approve_yellow.png) no-repeat center center;
+}
+
+.rejectrow {
+	background: url(../../assets/images/reject_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.rejectrow:hover, .rejectrow.active {
+	background: url(../../assets/images/reject_yellow.png) no-repeat center center;
+}
+
+.archiverow {
+	background: url(../../assets/images/archive_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.archiverow:hover, .archiverow.active {
+	background: url(../../assets/images/archive_yellow.png) no-repeat center center;
+}
+
+.restorerow {
+	background: url(../../assets/images/restore_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.restorerow:hover, .restorerow.active {
+	background: url(../../assets/images/restore_yellow.png) no-repeat center center;
+}
+
+.publishrow {
+	background: url(../../assets/images/publish_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.publishrow:hover, .publishrow.active {
+	background: url(../../assets/images/publish_yellow.png) no-repeat center center;
+}
+
+.respondrow {
+	background: url(../../assets/images/respond_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.respondrow:hover, .respondrow.active {
+	background: url(../../assets/images/respond_yellow.png) no-repeat center center;
+}
+
+.blockrow {
+	background: url(../../assets/images/block_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.blockrow:hover, .blockrow.active {
+	background: url(../../assets/images/block_yellow.png) no-repeat center center;
+}
+
+.saverow, .activesaverow {
+	background: url(../../assets/images/save_grey.png) no-repeat center center;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.saverow:hover, .saverow.active, .activesaverow {
+	background: url(../../assets/images/save_yellow.png) no-repeat center center;
+}
+
+.publishicon {
+	background: url(../../assets/images/publish_yellow.png) no-repeat center center;
+	width: 30px;
+	height: 25px;
+}
+
+
+
+.yellowfield {
+	border: 2px solid #FFD418;
+	padding:8px;
+	font-size: 16px;
+    color:#333333;
+	width: 220px;
+}
+
+
+
+.textfieldlistitem {
+	background: url(../../assets/images/reject_grey.png) no-repeat left center #F0F0F0;
+	display: inline-block;
+	padding-left: 30px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	border-radius: 5px;
+	/*-moz-border-radius: 5px 5px 5px 5px;*/
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.inlineitem {
+	background-color: #F0F0F0;
+	display: inline-block;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	border-radius: 5px;
+	/*-moz-border-radius: 5px 5px 5px 5px;*/
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+
+
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* START: Results list table formatting */
+/* ----------------------------------------------------------------------------------------------- */
+
+.resultslisttable {
+	width: 100%;
+}
+.resultslisttable tr td {
+	padding: 5px;
+	vertical-align:top;
+}
+.resultslisttable tr:first-child td {
+	font-style: italic;
+}
+.resultslisttable tr:not(:first-child) td {
+	border-top: 1px solid #EAECEE;
+}
+
+.resultslisttable.preview tr:not(:first-child) td:first-child, .resultslisttable.preview tr:not(:first-child) td:last-child {
+	display: none;
+}
+
+.resultslisttable.editable .edit {
+	background: url(../../assets/images/edit_icon.png) no-repeat center center;
+	width: 39px;
+	height: 39px;
+	cursor:pointer;
+}
+.resultslisttable.editable .delete {
+	background: url(../../assets/images/remove_icon_bg.png) no-repeat center center;
+	width: 39px;
+	height: 39px;
+	cursor:pointer;
+}
+
+.resultslisttable tr td div, .resultslisttable.editable tr td div {
+	vertical-align:top;
+	width: 30%;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* END: Results list table formatting */
+/* ----------------------------------------------------------------------------------------------- */
+
+
+
+
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* START: Checkbox formatting */
+/* ----------------------------------------------------------------------------------------------- */
+
+.bigcheckbox, .selectallcheck {
+    display: none;
+}
+ 
+.bigcheckbox + label,
+.selectallcheck + label {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+ 
+.bigcheckbox + label:active, .bigcheckbox:checked + label:active,
+.selectallcheck + label:active, .selectallcheck:checked + label:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+ 
+.bigcheckbox:checked + label,
+.selectallcheck:checked + label {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+ 
+.bigcheckbox:checked + label:after,
+.selectallcheck:checked + label:after {
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: #18C93E;
+	font-weight:bold;
+}
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* END: Checkbox formatting */
+/* ----------------------------------------------------------------------------------------------- */
+
+
+
+

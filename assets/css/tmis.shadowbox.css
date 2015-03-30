@@ -1,0 +1,50 @@
+/* CSS Document */
+
+#__shadowbox, #__waitbox {
+	background: rgb(0, 0, 0); /* Fallback */
+	background: rgba(0, 0, 0, 0.6); 
+	position:absolute;
+	width: 100%;
+}
+
+#__shadowbox iframe {
+	overflow:hidden;
+	position:absolute;
+	background-color: #FFF;
+	border-radius: 7px;
+	padding: 25px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	z-index: 1000;
+}
+
+
+
+#__waitbox div {
+	overflow:hidden;
+	position:absolute;
+	border-radius: 7px;
+	padding: 25px;
+	width: 60px;
+	height: 60px;
+	background: url(../../assets/images/loading.gif) no-repeat center center #FFF;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	z-index: 1000;
+}
+
+
+#__shadowbox_closer {
+	background: url(../../assets/images/reject_grey.png) no-repeat center center;
+	width: 20px;
+	height: 20px;
+	position:absolute;
+	z-index: 9999;
+	cursor:pointer;
+}
+
+

@@ -1,0 +1,15 @@
+/* CSS Document */
+
+
+#registration_form_btn_only, #registration_close_btn, .centrallinks, #mobilebuttons {
+	display:none;
+}
+
+#listcontainer {
+	display:block;
+}
+
+
+
+
+

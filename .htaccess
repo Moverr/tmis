@@ -1,0 +1,15 @@
+<IfModule !mod_php5.c>
+AddType x-mapp-php5 .php
+AddHandler x-mapp-php5 .php
+</IfModule>
+
+RewriteEngine On
+RewriteBase /tmis
+RewriteCond %{REQUEST_URI} ^system.*
+RewriteCond $1 !^(index\.php|images|js|uploads|css|robots\.txt)
+
+#Assume all domain calls include index.php
+RewriteRule ^(.*)$ /index.php/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]

@@ -1,0 +1,47 @@
+/* CSS Document */
+
+#registration_form_btn_only, .centrallinks, #mobilebuttons {
+	display:block;
+}
+
+
+#mobilebuttons {
+	width: 100%;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+
+.logo {
+	text-align: center;
+	width: 99%;
+}
+
+
+.rightcolumn {
+	display:none;
+}
+
+.leftcolumn {
+	min-width: 330px;
+}
+
+.listsearchfield {
+	padding-top: 0px;
+	display: inline-block;
+}
+
+.listsearchfield  .findfield {
+	border: 0px;
+	width: 100px;
+	font-size: 13px;
+}
+
+.leftcolumn .h1 {
+	font-size: 22px;
+}
+
+.loginform, #registration_form {
+	display:none;
+}
