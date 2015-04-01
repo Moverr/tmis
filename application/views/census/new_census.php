@@ -70,8 +70,8 @@ if(empty($id)) {?>
   <td> <?php if(!empty($id)){
   echo "<div class='value'>".$this->native_session->get('subjectspecialization__subjectspecialization')."</div>";
 } else {?>
- <input type="text" id="subjectspecialization__subjectspecialization" name="subjectspecialization__subjectspecialization" title="Select or Search for Main Subject Specialization" placeholder="Select or Search for Main Subject Specialization" class="textfield selectfield selectfield_multiple searchable" value="<?php echo $this->native_session->get('teachername__teachers');?>" style="width:95%;" />
- <input type='text' class="textfield" id='subjectspecialization' name='subjectspecialization' value='<?php echo $this->native_session->get('teacherid');?>' style="display:block;" /><?php }?></td>
+ <input type="text" id="subjectspecialization__subjectspecialization" name="subjectspecialization__subjectspecialization" title="Select or Search for Main Subject Specialization" placeholder="Select or Search for Main Subject Specialization" class="textfield selectfield  searchable" value="<?php echo $this->native_session->get('teachername__teachers');?>" style="width:95%;" />
+ <input type='text' class="textfield" id='subjectspecialization' name='subjectspecialization' value='<?php echo $this->native_session->get('teacherid');?>' style="display:none;" /><?php }?></td>
   </tr>
 <!--  <tr>
     <td class="label top">Responsibilities:</td>
