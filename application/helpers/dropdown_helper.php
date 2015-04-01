@@ -344,15 +344,16 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 		break;
 
 
-
+    // fetch subject specializations from teaching_subject table.
 		case "subjectspecialization":
 		$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
-		$searchQuery = !empty($searchString)? " AND details LIKE '".$searchString."%' ": "";
-		$orderBy = " ORDER BY details ASC";
+		$searchQuery = !empty($searchString)? " AND subject LIKE '".$searchString."%' ": "";
+		$orderBy = " ORDER BY subject ASC";
 		$subjects = $obj->_query_reader->get_list('get_list_subjects', array('search_query'=>$searchQuery, 'order_by'=>$orderBy, 'limit_text'=>'100'));
+
 		foreach($subjects AS $row)
 		{
-			$optionString .= "<div data-value='".$row['id']."' onclick=\"universalUpdate('schoolid', '".$row['id']."')\">".$row['details']."</div>";
+			$optionString .= "<div data-value='".$row['id']."' onclick=\"universalUpdate('subject', '".$row['id']."')\">".$row['subject']."</div>";
 		}
 		break;
 
