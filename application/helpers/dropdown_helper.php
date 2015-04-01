@@ -342,10 +342,13 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 				$optionString .= "<div data-value='".$row['display']."'>".$row['display']."</div>";
 			}
 		break;
+
+
+
 		case "subjectspecialization":
 		$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
-		$searchQuery = !empty($searchString)? "AND  (subject.details LIKE '".$searchString."%') ": " ";
-		$orderBy = " ORDER BY subject.details ASC";
+		$searchQuery = !empty($searchString)? " AND details LIKE '".$searchString."%' ": "";
+		$orderBy = " ORDER BY details ASC";
 		$subjects = $obj->_query_reader->get_list('get_list_subjects', array('search_query'=>$searchQuery, 'order_by'=>$orderBy, 'limit_text'=>'100'));
 		foreach($subjects AS $row)
 		{

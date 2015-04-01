@@ -101,7 +101,7 @@ $(function() {
 		var listid = this.id.split("_").pop();
 		delete subjectlist[listid];
 		subjects_str = "<ul>";
- 	$.each(subjectlist,function(key, value){
+  	$.each(subjectlist,function(key, value){
 		console.log('index: ' + key+ ',value: ' + value);
 		subjects_str += "<li>"+value+"<a href=\"javascript:void(0);\"  id=\"a_"+key+"\" dataval=\""+key+"\" >X</a> </li>";
 	});
@@ -109,7 +109,6 @@ $(function() {
 	if(	$('#subjectslist_div').length <= 0)
 	$('#'+fieldId).after("<div id='subjectslist_div' class='callout_list'></div>").fadeIn('slow')
 	$('#subjectslist_div').html(subjects_str);
-
 	})
 	// Handle list display  an option in the field
 	$(document).on('click focus', '.selectfielddiv div', function(){
@@ -119,7 +118,7 @@ $(function() {
 		$('#'+fieldId).trigger('change'); // Make this look like the person has entered the stuff
 		if(!$('#'+fieldId).hasClass('editable') && !$(this).hasClass('searchable'))
 		{
-		 $(this).attr('readonly', 'readonly');
+		$(this).attr('readonly','readonly');
 		}
 		//code to display list of items on select JS.
 		if($('#'+fieldId).hasClass('selectfield_multiple'))
@@ -127,7 +126,7 @@ $(function() {
 			subjectlist[$(this).data('value')] = $(this).html();
 			console.log(subjectlist);
 			subjectlist_count ++;
-				subjects_str = "<ul>";
+			subjects_str = "<ul>";
 			$.each(subjectlist,function(key, value){
 			  console.log('index: ' + key+ ',value: ' + value);
 				subjects_str += "<li>"+value+"<a href=\"javascript:void(0);\"  id=\"a_"+key+"\" dataval=\""+key+"\" >X</a> </li>";
@@ -135,15 +134,18 @@ $(function() {
 			subjects_str +="</ul>";
 			if(	$('#subjectslist_div').length <= 0)
 			$('#'+fieldId).after("<div id='subjectslist_div' class='callout_list'></div>").fadeIn('slow');
-
 			$('#subjectslist_div').html(subjects_str);
-		}
 
 
-		//
+
+			subjectsstr +="";
+			$('#'+fieldId+'__hidden').val($(this).data('value',subjects_str));
+	 	}
+
 		// Also fill the hidden value for the field with the real value
 		$('#'+fieldId+'__hidden').val($(this).data('value'));
 		$(this).parent('div').fadeOut('fast');
+
 	});
 
 
@@ -181,13 +183,6 @@ $(function() {
 
 		updateFieldLayer(getBaseURL()+"page/get_custom_drop_list/type/"+listType+searchValue+addSelectVariables($(this)),'','',fieldId+'__div','');
 	});
-
-//
-
-
-
-
-
 
 
 
