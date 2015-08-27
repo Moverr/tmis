@@ -41,7 +41,7 @@
 <input type='hidden' id='censussearch__action' name='censussearch__action' value='<?php echo base_url()."search/load_list/action/".(!empty($action)? $action: 'view');?>' />
 </div></td></tr>
             <tr><td>
-       
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
  <tr>
     <td>
@@ -51,14 +51,14 @@
     <td><div id="paginationdiv__censussearch_list">
     <div id="censussearch__1"><?php $this->load->view('census/list', array(
 	'listid'=>'censussearch',
-	'list'=>(!empty($list)? $list: array()), 
-	'action'=>(!empty($action)? $action: ''), 
-	'msg'=>(!empty($msg)? $msg: '') 
+	'list'=>(!empty($list)? $list: array()),
+	'action'=>(!empty($action)? $action: ''),
+	'msg'=>(!empty($msg)? $msg: '')
 	));?></div></div></td>
   </tr>
   <?php if(!empty($list)){?>
   <tr>
-    <td style="padding:40px 15px 10px 15px; "><div class='centerpagination' style="margin:0px;padding:0px;"><div id="censussearch" class="paginationdiv"><div class="previousbtn" style='display:none;'>&#x25c4;</div><div class="selected">1</div><div class="nextbtn">&#x25ba;</div></div><input name="paginationdiv__censussearch_action" id="paginationdiv__censussearch_action" type="hidden" value="<?php echo base_url()."search/load_list/type/census/action/".(!empty($action)? $action: 'view');?>" />
+<td style="padding:40px 15px 10px 15px; "><div class='centerpagination' style="margin:0px;padding:0px;"><div id="censussearch" class="paginationdiv"><div class="previousbtn" style='display:none;'>&#x25c4;</div><div class="selected">1</div><div class="nextbtn">&#x25ba;</div></div><input name="paginationdiv__censussearch_action" id="paginationdiv__censussearch_action" type="hidden" value="<?php echo base_url()."search/load_list/type/census/action/".(!empty($action)? $action: 'view');?>" />
 <input name="paginationdiv__censussearch_maxpages" id="paginationdiv__censussearch_maxpages" type="hidden" value="<?php echo NUM_OF_LISTS_PER_VIEW;?>" />
 <input name="paginationdiv__censussearch_noperlist" id="paginationdiv__censussearch_noperlist" type="hidden" value="<?php echo NUM_OF_ROWS_PER_PAGE;?>" />
 <input name="paginationdiv__censussearch_showdiv" id="paginationdiv__censussearch_showdiv" type="hidden" value="paginationdiv__censussearch_list" /></div></td>
@@ -66,11 +66,11 @@
   <?php }?>
 </table>
 </div>
-   
+
     </td>
     </tr>
 </table>
-            
+
             </td></tr>
         </table></td>
       </tr>

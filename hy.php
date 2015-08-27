@@ -181,12 +181,11 @@ class Teacher extends CI_Controller
 		$data = filter_forwarded_data($this);
 		if(!empty($_POST))
 		{
-			 
-		 
 			#get Teacher Grade into session [mover]
 			$grade = $this->get_grade();
+			
 			# Approve or reject a teacher
-		 	$result = $this->_teacher->verify($_POST);
+			$result = $this->_teacher->verify($_POST);
 			
 			$actionPart = current(explode("_", $_POST['action']));
 			$actions = array('approve'=>'approved', 'reject'=>'rejected', 'archive'=>'archived', 'restore'=>'restored');
@@ -195,12 +194,11 @@ class Teacher extends CI_Controller
 		}
 		else
 		{
-			
 			# Get list type
 			$data['list_type'] = current(explode("_", $data['action']));
-			$data['area'] = 'verify_teacher';		 
-			$this->load->view('addons/basic_addons', $data); 
-		}   
+			$data['area'] = 'verify_teacher';
+			$this->load->view('addons/basic_addons', $data);
+		}
 	}
 	
 	
@@ -225,12 +223,10 @@ class Teacher extends CI_Controller
 				$this->native_session->delete('graded');					
 			}
 	 	}
-	 
-			 
-			 
-		 
-	#	exit();
+	  
 	}
+	
+	
 	
 	
 	

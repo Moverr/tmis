@@ -268,6 +268,7 @@ else if(!empty($area) && in_array($area, array("verify_interview")))
 
 else if(!empty($area) && $area == 'verify_teacher')
 {
+	print_r($action);
 	$item = str_replace('verify_', '', $area);
 	
 	$tableHTML .= "<table border='0' cellspacing='0' cellpadding='5' width='100%' />
@@ -277,7 +278,11 @@ else if(!empty($area) && $area == 'verify_teacher')
 	if($action == 'approve_toactive')
 	{
 		$tableHTML .= "<table border='0' cellspacing='0' cellpadding='0' width='100%' />
-		<tr><td class='label'>Grade:</td><td><input type='text' id='_".$action."_".$id."grade__grades' name='_".$action."_".$id."grade__grades' placeholder='Select Grade' class='textfield selectfield yellowfield otherfield' style='width:97%' onclick='setDatePicker()'/></td>
+		<tr>
+		<th>Category: </hd>
+		<td  colspan='3'><input type='text' id='_".$action."_".$id."category__categories' name='_".$action."_".$id."category__categories' placeholder='Select Grade Category' class='textfield selectfield yellowfield otherfield  ' style='width:100%' onclick='setDatePicker()'/></td>
+		</tr>
+		<tr><td class='label'>Grade:</td><td><input type='text' id='_".$action."_".$id."grade__grades' name='_".$action."_".$id."grade__grades' placeholder='Select Grade' class='textfield selectfield yellowfield otherfield grade' style='width:97%' onclick='setDatePicker()'/></td>
 			<td class='label'>Effective Date:</td><td><input type='text' id='effectivedate_".$action."_".$id."' name='effectivedate_".$action."_".$id."' title='Effective Date' class='textfield datefield clickactivated yellowfield otherfield' value='' style='width:97%'/></td>
 		</tr>
 		<tr>

@@ -35,6 +35,7 @@ class _approval_chain extends CI_Model
 			$originatorId = '';
 		}
 		
+		 
 		# The next approvers
 		if(empty($originatorId) || (!empty($chain) && $chain['max_steps'] != $step)) 
 			$approvers = $this->get_next_approver((!empty($originatorId)? $originatorId: $thisUserId), $chainType, $step);
@@ -68,6 +69,8 @@ class _approval_chain extends CI_Model
 	# Get the action to perform based on the step in the chain.
 	function action($chainId, $otherDetails=array())
 	{
+		#print_r($otherDetails);
+		#exit();
 		# 1. Get the chain details and settings
 		$chain = $this->_query_reader->get_row_as_array('get_approval_chain_by_id', array('chain_id'=>$chainId));
 		if(!empty($chain)) $settings = $this->_query_reader->get_row_as_array('get_approval_chain_setting', array('chain_type'=>$chain['chain_type'], 'step_number'=>$chain['step_number']));
@@ -100,6 +103,7 @@ class _approval_chain extends CI_Model
 					break;
 					
 					case 'issue_confirmation_letter':
+					//issue confirmatin letter :: 
 						$result = $this->issue_confirmation_letter($chain, $otherDetails);
 					break;
 					
@@ -218,6 +222,11 @@ class _approval_chain extends CI_Model
 	#Send a document as part of the approval process
 	function send_document($chain, $documentType, $requiredModes=array('system'), $otherDetails=array())
 	{
+		//grade_grades changes to Teacher_grades :: 
+		echo 'send_document';
+		print_r($otherDetails);
+		echo "<br/> :::: <br/>";
+		#exit();
 		$this->load->model('_document');
 		$originator = $this->_query_reader->get_row_as_array('get_originator_of_chain', array('subject_id'=>$chain['subject_id'], 'chain_type'=>$chain['chain_type']));
 		
@@ -227,8 +236,30 @@ class _approval_chain extends CI_Model
 			$details = $this->_query_reader->get_row_as_array('get_user_profile', array('user_id'=>$originator['originator']));
 			if(!empty($otherDetails)) $details = array_merge($details, $otherDetails);
 			
+			//adding the grade to the flow of te application 
+			$grade = '';
+			$grade_category = $this->native_session->get('graded');
+			if(!empty($grade_category) && $grade_category == 'true')
+			{
+				
+				 $doc_code = str_replace(' ', '_', $otherDetails['teacher_grade']);		
+				
+			 
+			
+			}
+			else
+			{
+				$doc_code = 'document__'.$documentType.$grade;
+			}
+			
+			# print_r($doc_code); exit();	 
+			
+		#	graded
+		 #	print_r('document__'.$documentType.$grade); exit();
 			#Generate the letter PDF
-			$letterUrl = $this->_document->generate_letter('document__'.$documentType, $details);
+			$letterUrl = $this->_document->generate_letter($doc_code, $details);
+			print_r($letterUrl);
+			exit();
 			
 			# Send the document to the user's email and originator of the approval process if they are different in their system
 			if(!empty($letterUrl))
@@ -313,6 +344,8 @@ class _approval_chain extends CI_Model
 	# Issue registration certificate as part of the approval process
 	function issue_registration_certificate($chain, $otherDetails)
 	{
+		#echo 'issue_registration_certificate';
+		#print_r($otherDetails); exit();
 		$user = $this->_query_reader->get_row_as_array('get_user_profile', array('user_id'=>$chain['subject_id']));
 		
 		$actionDetails['date_today'] = date('d-M-Y', strtotime('now'));
@@ -326,6 +359,9 @@ class _approval_chain extends CI_Model
 		$actionDetails['tracking_number'] = $actionDetails['certificate_number'];
 		$approver = $this->_query_reader->get_row_as_array('get_user_profile', array('user_id'=>$this->native_session->get('__user_id')));
 		$actionDetails['signature_url'] = $approver['signature'];
+	 
+	 	if(!empty($this -> native_session->get('grade')))
+		$actionDetails['grade'] = $this->native_session->get('grade');
 		
 		return !empty($actionDetails['certificate_number'])? $this->send_document($chain, 'registration_certificate', array('system'), $actionDetails): false;
 	}

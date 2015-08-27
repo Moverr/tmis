@@ -34,7 +34,7 @@ else if(!empty($area) && $area == "address_field_form")
 	   
 	$tableHTML .= "<tr><td><input type='text' id='".$field_id."__addressline' name='".$field_id."__addressline' class='textfield' placeholder='Address (e.g. Plot 23 Kira Rd)' value='".($this->native_session->get($field_id.'__addressline')? $this->native_session->get($field_id.'__addressline'): '')."' maxlength='200'/></td></tr>
 	
-  <tr><td><input type='text' id='".$field_id."__county' name='".$field_id."__county' class='textfield selectfield searchable optional' placeholder='County (Optional)' data-val='-district-".$field_id."' value='".($this->native_session->get($field_id.'__county')? $this->native_session->get($field_id.'__county'): '')."' maxlength='200'/>
+  <tr><td><input type='text' id='".$field_id."__county' name='".$field_id."__county' class='textfield selectfield searchable editable optional' placeholder='County (Optional)' data-val='-district-".$field_id."' value='".($this->native_session->get($field_id.'__county')? $this->native_session->get($field_id.'__county'): '')."' maxlength='200'/>
   <input type='hidden' id='-district-".$field_id."' name='-district-".$field_id."' value='".$field_id."__district' /></td></tr>
   
   <tr><td><input type='text' id='".$field_id."__district' name='".$field_id."__district' class='textfield selectfield editable' placeholder='District or State' value='".($this->native_session->get($field_id.'__district')? $this->native_session->get($field_id.'__district'): '')."' maxlength='200'/>".

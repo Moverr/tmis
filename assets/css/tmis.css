@@ -282,13 +282,26 @@ a.error {
 	padding:8px;
 	font-size: 16px;
     color:#333333;
-	width: 220px;
+	width: 279px;
+}
+.textfield-small{
+	border: 1px solid #DDDDDD;
+	padding:8px;
+	font-size: 16px;
+    color:#333333;
+	width: 190px;
 }
 
 .selectfield {
 	background: url(../../assets/images/select_arrow_bg.png) no-repeat right center #FFF;
 	padding-right: 40px;
 	width: 188px;
+}
+
+.selectfield-medium {
+	background: url(../../assets/images/select_arrow_bg.png) no-repeat right center #FFF;
+	padding-right: 40px;
+	width: 245px;
 }
 
 select {
@@ -882,4 +895,9 @@ textarea {
 	min-height: 100px;
 	border: solid 1px #DDD;
 	padding: 5px;
+}
+.table_callout{
+	  position:relative; left:10px;
+	border:1px solid #e1e1e1; padding:5px; width:200px; border-spacing:105px;
+	
 }

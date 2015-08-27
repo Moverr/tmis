@@ -1,4 +1,4 @@
-<?php $msg = empty($msg)? get_session_msg($this): $msg; 
+<?php $msg = empty($msg)? get_session_msg($this): $msg;
 if(!empty($action) && in_array($action, array('setdate', 'recommend', 'recommendations')) ) $listName = "Application";
 else  $listName = "Interview";
 ?>
@@ -39,23 +39,30 @@ else  $listName = "Interview";
         <td class="bodyspace" style="padding-left:15px;padding-top:15px; vertical-align:top;">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
       		<tr>
-              <td><div class="h1 grey nowrap listheader"><?php echo $listName;?>s</div><?php if(!empty($action) && $action == 'setdate' && check_access($this, 'set_interview_date', 'boolean') && !empty($list)) echo "<div id='multiuserdateset__btn' class='nextdiv multiusericon selectlistbtn' style='margin-left:15px; margin-top:10px;'  data-url='interview/select_multi_user' title='Click to set date for multiple applicants'></div>";?><div class="listsearchfield"><input type="text" id="interviewsearch__interviews" data-type="interview" name="interviewsearch__interviews" placeholder="Search <?php echo $listName;?>s" class="findfield" value=""/>
+              <td><div class="h1 grey nowrap listheader"><?php echo $listName;?>s</div>
+        <?php if(!empty($action) && $action == 'setdate' && check_access($this, 'set_interview_date', 'boolean') && !empty($list)) echo "<div id='multiuserdateset__btn' class='nextdiv multiusericon selectlistbtn' style='margin-left:15px; margin-top:10px;'  data-url='interview/select_multi_user' title='Click to set date for multiple applicants'></div>";?>
+
+<div class="listsearchfield">
+
+<input type="text" id="interviewsearch__interviews" data-type="interview" name="interviewsearch__interviews" placeholder="Search <?php echo $listName;?>s" class="findfield" value=""/>
 <input type='hidden' id='interviewsearch__displaydiv' name='interviewsearch__displaydiv' value='interviewsearch__1' />
-<input type='hidden' id='interviewsearch__action' name='interviewsearch__action' value='<?php echo base_url()."search/load_list/action/".(!empty($action)? $action: 'view');?>' /></div></td></tr>
-           
-           <tr>
-           <td><div id='multiuserdateset__div' class="selectlistdiv" style="display:none;">
+<input type='hidden' id='interviewsearch__action' name='interviewsearch__action' value='<?php echo base_url()."search/load_list/action/".(!empty($action)? $action: 'view');?>' /></div>
+ </td></tr>
+
+ <tr>
+   <td>
+   <div id='multiuserdateset__div' class="selectlistdiv" style="display:none;">
            <?php echo "<table width='100%' cellpadding='5' class='microform'>
-		<tr> 
+		<tr>
 		<td width='96%' valign='top'><div class='label' style='text-align:left;'>Applicants:</div><div id='input_multiuserdateset__div' class='textfield value' style='min-height:88px;max-height:88px;min-width:96%; overflow-y: auto; overflow-x: hidden;' data-default='Search and select applicants from the list below.'>Search and select applicants from the list below.</div>
 		</td>
-		
+
 		<td width='2%' valign='top'><div class='label' style='text-align:left;'>Interview Date:</div><input type='text' id='interviewdate' name='interviewdate' title='Interview Date' class='textfield datefield showtime' value=''/>
-		
+
 		<div class='label' style='margin-top:10px;text-align:left;'>Interview Board:</div>
 		<input type='text' id='boardname__viewonlyboards' name='boardname__viewonlyboards' title='Select Board Name' placeholder='Select Board Name' class='textfield selectfield' value=''/><input type='hidden' id='boardid' name='boardid' value='' />
 		</td>
-		
+
 		<td width='2%' valign='top' style='padding-top:25px;'><button type='button' class='btn submitmicrobtn selectlistconfirmbtn' name='setdate' id='setdate' value='SET DATE' style='width:110px;'>SET DATE</button>
 		<button type='button' class='greybtn selectlistcancelbtn' name='cancelsetdate' id='cancelsetdate' value='CANCEL' style='width:110px; margin-top:10px;'>CANCEL</button>
 		<input type='hidden' id='action' name='action' value='".base_url()."interview/select_multi_user' />
@@ -69,9 +76,9 @@ else  $listName = "Interview";
            <div id='multiuserdateset__div__MSG' style="display:none;"></div>
            <div id='multiuserdateset__div__IGNORE' style="display:none;"></div></td>
            </tr>
-           
+
             <tr><td>
-       
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
  <tr>
     <td>
@@ -81,9 +88,9 @@ else  $listName = "Interview";
     <td><div id="paginationdiv__interviewsearch_list">
     <div id="interviewsearch__1"><?php $this->load->view('interview/list', array(
 	'listid'=>'interviewsearch',
-	'list'=>(!empty($list)? $list: array()), 
-	'action'=>(!empty($action)? $action: ''), 
-	'msg'=>(!empty($msg)? $msg: '') 
+	'list'=>(!empty($list)? $list: array()),
+	'action'=>(!empty($action)? $action: ''),
+	'msg'=>(!empty($msg)? $msg: '')
 	));?></div></div></td>
   </tr>
   <?php if(!empty($list)){?>
@@ -96,11 +103,11 @@ else  $listName = "Interview";
   <?php }?>
 </table>
 </div>
-   
+
     </td>
     </tr>
 </table>
-            
+
             </td></tr>
         </table></td>
       </tr>

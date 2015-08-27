@@ -468,6 +468,7 @@ function updateFieldValue(fieldChangeId, fieldChangeValue, donotRestoreChars)
 //Universalyl update field even if it is read-only
 function universalUpdate(fieldChangeId, fieldValue, donotRestoreChars)
 {
+
 	if(typeof donotRestoreChars !== "undefined"){
 		fieldValue = restoreBadChars(fieldValue);
 	}
@@ -482,6 +483,12 @@ function universalUpdate(fieldChangeId, fieldValue, donotRestoreChars)
 	{
 		$('#'+fieldChangeId).val(fieldValue);
 	}
+
+}
+
+function listtags(key, value){
+
+//	alert(value);
 }
 
 
@@ -891,6 +898,14 @@ $(function(){
 	});
 });
 
+///
+  $(function(){
+	  $(document).on('focus','.radiooption',function(){
+	    var dataval = $(this).attr('dataval');	 
+	   $("#"+dataval).prop('checked','checked');	 
+		 
+	  });
+  });
 
 //Function to format the date as it is entered to MM/DD/YYYY
 function formatDateValue(dateField, keyEvent)

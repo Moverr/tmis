@@ -14,23 +14,26 @@ class _census extends CI_Model
 	# Add a new census
 	function add_new($censusDetails)
 	{
-#print_r($censusDetails); exit();
+	#	print_r($censusDetails); exit();
 		$isAdded = false;
-		$required = array('teachername__teachers', 'teacherid', 'censusstart', 'censusend', 'averageworkload','mpsrollnumber');
-
+		$required = array('teachername__teachers', 'teacherid', 'censusstart', 'censusend', 'averageworkload','mpsrollnumber','subjectspecialization__subjectspecialization__hidden',);
+ 
 		# 1. Add all provided data into the session
-		$passed = process_fields($this, $censusDetails, $required, array("-"));
+		$passed = process_fields($this, $censusDetails, $required, array("-","/"));
+		#print_r($passed); exit();
 		$msg = !empty($passed['msg'])? $passed['msg']: "";
+		#echo "<BR>MESSAGE: ".$msg;
 		# 2. Save the data into the database
 		if($passed['boolean'])
 		{
+			#echo "<BR>IN HERE";
 			$details = $passed['data'];
-			$censusId = $this->_query_reader->add_data('add_census_data', array('teacher_id'=>$details['teacherid'], 'start_date'=>format_date($details['censusstart'], 'YYYY-MM-DD', ''), 'end_date'=>format_date($details['censusend'], 'YYYY-MM-DD', ''), 'weekly_workload_average'=>$details['averageworkload'], 'added_by'=>$this->native_session->get('__user_id') ,'mpsrollnumber'=>$details['mpsrollnumber'],'subjectid' => $details['subjectspecialization__subjectspecialization__hidden']));
+			$censusId = $this->_query_reader->add_data('add_census_data', array('teacher_id'=>$details['teacherid'], 'start_date'=>format_date($details['censusstart'], 'YYYY-MM-DD', ''), 'end_date'=>format_date($details['censusend'], 'YYYY-MM-DD', ''), 'weekly_workload_average'=>$details['averageworkload'], 'added_by'=>$this->native_session->get('__user_id') ,'mpsrollnumber'=>$details['mpsrollnumber'],'subjectid' => $details['subjectspecialization__subjectspecialization__hidden'],'last_uploaded'));
 
 			 $isAdded = !empty($censusId)? true: false;
 			 if($isAdded)
 			 {
-				 # Add responsibilities and training
+			 	# Add responsibilities and training
 				 if(!empty($censusDetails['responsibility'])) $this->_query_reader->run('add_census_responsibility', array('census_id'=>$censusId, 'responsibility_ids'=>"'".implode("','",$censusDetails['responsibility'] )."'"));
 
 				 if(!empty($censusDetails['training'])) $this->_query_reader->run('add_census_training', array('census_id'=>$censusId, 'training_ids'=>"'".implode("','",$censusDetails['training'] )."'"));

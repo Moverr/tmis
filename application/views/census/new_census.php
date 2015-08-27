@@ -1,5 +1,7 @@
 <?php
 $forwardUrl = !empty($forward)? $forward: get_user_dashboard($this, $this->native_session->get('__user_id'));
+
+$msg = empty($msg)? get_session_msg($this): $msg; 
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,23 +69,23 @@ if(empty($id)) {?>
   <td> <?php if(!empty($id)){
   echo "<div class='value'>".$this->native_session->get('subjectspecialization__subjectspecialization')."</div>";
 } else {?>
- <input type="text" id="subjectspecialization__subjectspecialization" name="subjectspecialization__subjectspecialization" title="Select or Search for Main Subject Specialization" placeholder="Select or Search for Main Subject Specialization" class="textfield selectfield  searchable" value="<?php echo $this->native_session->get('teachername__teachers');?>" style="width:95%;" />
+ <input type="text" id="subjectspecialization__subjectspecialization" name="subjectspecialization__subjectspecialization" title="Select or Search for Main Subject Specialization" placeholder="Select or Search for Main Subject Specialization" class="textfield selectfield  searchable" value="<?php echo $this->native_session->get('teachername__teachers');?>" style="width:90%;" />
  <?php }?></td>
   </tr>
 
   <tr>
-    <td class="label">MPS Roll Number:</td>
+    <td class="label">MPS Payroll Number:</td>
     <td><?php if(!empty($action) && $action=='view'){
     echo "<div class='value'>".$this->native_session->get('mpsrollnumber')."</div>";
-  } else {?><input type="text" id="mpsrollnumber" name="mpsrollnumber" title="MPS Roll Number"  placeholder="MPS Roll Number" maxlength="5" class="textfield " value="<?php echo $this->native_session->get('mpsrollnumber');?>"/><?php }?></td>
+  } else {?><input type="text" id="mpsrollnumber" name="mpsrollnumber" title="mpspayrollnumber"  placeholder="MPS Payroll Number" maxlength="40" class="textfield " value="<?php echo $this->native_session->get('mpsrollnumber');?>" style="width:95%;"/><?php }?></td>
   </tr>
+ 
 
 
-
-<!--  <tr>
+ <tr>
     <td class="label top">Responsibilities:</td>
     <td><?php
-		echo "<div style='max-height:200px; overflow-y: auto; overflow-x: hidden;'>
+		echo "<div style='max-height:200px; overflow-y: auto; width:98%; overflow-x: auto;'>
 		<table border='0' cellspacing='0' cellpadding='0' class='listtable'>";
 
 		if(!empty($responsibility_list))
@@ -93,7 +95,7 @@ if(empty($id)) {?>
 			{
 				echo "<tr class='listrow'><td>".$row['code']."</td>
 
-				<td><input type='checkbox' name='responsibility[]' id='responsibility_".$row['id']."' value='".$row['id']."' ".($this->native_session->get('responsibility') && in_array($row['id'], $this->native_session->get('responsibility'))? ' checked': '')."><label for='responsibility_".$row['id']."' style='white-space: nowrap;'>".$row['responsibility']."</label></td>
+				<td><label for='responsibility_".$row['id']."' style='white-space: nowrap;'> <input type='checkbox' name='responsibility[]' id='responsibility_".$row['id']."' value='".$row['id']."' ".($this->native_session->get('responsibility') && in_array($row['id'], $this->native_session->get('responsibility'))? ' checked': '').">".$row['responsibility']."</label></td>
 				</tr>";
 			}
 		} else{
@@ -101,7 +103,7 @@ if(empty($id)) {?>
 		}
 		echo "</table></div>";
 	    ?></td>
-  </tr> -->
+  </tr>
 
   <tr>
     <td>&nbsp; </td>
@@ -110,7 +112,7 @@ if(empty($id)) {?>
   <tr>
     <td class="label top">Training:</td>
     <td><?php
-		echo "<div style='max-height:200px; overflow-y: auto; overflow-x: hidden;'>
+		echo "<div style='max-height:200px; overflow-y: auto;  width:98%; overflow-x: hidden;'>
 		<table border='0' cellspacing='0' cellpadding='0' class='listtable'>";
 
 		if(!empty($training_list))
@@ -120,7 +122,7 @@ if(empty($id)) {?>
 			{
 				echo "<tr class='listrow'><td>".$row['code']."</td>
 
-				<td><input type='checkbox' name='training[]' id='training_".$row['id']."' value='".$row['id']."' ".($this->native_session->get('training') && in_array($row['id'], $this->native_session->get('training'))? ' checked': '')."><label for='training_".$row['id']."' style='white-space: nowrap;'>".$row['training']."</label></td>
+				<td><label for='training_".$row['id']."' style='white-space: nowrap;'><input type='checkbox' name='training[]' id='training_".$row['id']."' value='".$row['id']."' ".($this->native_session->get('training') && in_array($row['id'], $this->native_session->get('training'))? ' checked': '').">".$row['training']."</label></td>
 				<td>".ucfirst($row['type'])."</td>
 				</tr>";
 			}
@@ -135,7 +137,7 @@ if(empty($id)) {?>
     <td class="label">Average Weekly Workload:</td>
     <td><?php if(!empty($action) && $action=='view'){
 		echo "<div class='value'>".$this->native_session->get('averageworkload')."</div>";
-		} else {?><input type="text" id="averageworkload" name="averageworkload" title="Average Weekly Workload"  placeholder="Time in hours" maxlength="5" class="textfield numbersonly" value="<?php echo $this->native_session->get('averageworkload');?>"/><?php }?></td>
+		} else {?><input type="text" id="averageworkload" name="averageworkload" title="Average Weekly Workload"  placeholder="Time in hours" maxlength="5" class="textfield numbersonly" value="<?php echo $this->native_session->get('averageworkload');?>" style="width:96%;"/><?php }?></td>
   </tr>
 
 

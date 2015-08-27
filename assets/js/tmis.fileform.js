@@ -2,14 +2,14 @@
 
 
 
-$(function() {	
+$(function() {
 	// --------------------------------------------------------------------------------------------------------
 	// Handling a login form (exposed form to public)
 	// --------------------------------------------------------------------------------------------------------
 	if($('#submitlogin').length > 0)
 	{
 		var loginForm = $('#submitlogin').parents('form').first();
-		
+
 		$('#loginusername, #loginpassword').on('keyup', function(){
 			if($('#loginusername').val().length > 4 && $('#loginpassword').val().length > 4){
 				$('#submitlogin').attr("type", "submit");
@@ -26,22 +26,40 @@ $(function() {
 			}
 		});
 	}
+
+
+
+
+
 	
-	
-	
-	
-	
-	
-	
-	
+	//---------------------------------------------------------------------------------------------------------
+	//Registering the rade Category Selected
+	//---------------------------------------------------------------------------------------------------------
+	var grade_category = 0;
+	$(document).on('click','.grade_category',function(){
+		grade_category = $(this).data('value');		
+		$(".grade").val('');
+	});
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling select fields
 	// --------------------------------------------------------------------------------------------------------
 	$(document).on('click', '.selectfield', function(){
+
 		var fieldId = $(this).attr('id');
 		var listType = fieldId.split('__').pop();
 		$(this).removeAttr('readonly');
-		
+		if(grade_category > 0)
+		{
+			$('#'+fieldId).after("<div id='"+fieldId+"__div' class='selectfielddiv'></div><input type='hidden' id='"+fieldId+"__hidden' name='"+fieldId+"__hidden' value=''>");//Add the field div and value hidden field
+			$('#'+fieldId+'__div').width($('#'+fieldId).outerWidth());//Set its width to be the same as that of the field
+			updateFieldLayer(getBaseURL()+"page/get_custom_drop_list/type/"+listType+addSelectVariables($('#'+fieldId))+'/category/'+grade_category,'','',fieldId+'__div','');
+
+
+		}
+		else
+		{
+		 
 		//Show the options for the select field. First create the div if its not available
 		if($('#'+fieldId+'__div').length > 0)
 		{
@@ -49,9 +67,9 @@ $(function() {
 			if($('#'+fieldId+'__div').html() == ''){
 				$('#'+fieldId+'__div').width($('#'+fieldId).outerWidth());//Set its width to be the same as that of the field
 				updateFieldLayer(getBaseURL()+"page/get_custom_drop_list/type/"+listType+addSelectVariables($('#'+fieldId)),'','',fieldId+'__div','');
-			} 
+			}
 			//In cases where you are just showing the same page div that you have just loaded
-			else 
+			else
 			{
 				$('#'+fieldId+'__div').fadeIn('fast');
 			}
@@ -62,36 +80,37 @@ $(function() {
 			$('#'+fieldId+'__div').width($('#'+fieldId).outerWidth());//Set its width to be the same as that of the field
 			updateFieldLayer(getBaseURL()+"page/get_custom_drop_list/type/"+listType+addSelectVariables($('#'+fieldId)),'','',fieldId+'__div','');
 		}
-		
+		}
+
 		//Reposition the drop down either above or below field based on its location
 		var windowHeight = $(window).height();
 		var divHeight = $('#'+fieldId+'__div').outerHeight();
 		var fieldHeight = $('#'+fieldId).outerHeight();
 		var fieldOffsetTop = $('#'+fieldId).offset().top;
 		var fieldOffsetLeft = $('#'+fieldId).offset().left;
-		
+
 		if((fieldOffsetTop + fieldHeight + divHeight) > windowHeight)
 		{
 			var offsetTop = fieldOffsetTop - divHeight;
-		} 
-		else 
+		}
+		else
 		{
 			var offsetTop = fieldOffsetTop + fieldHeight;
 		}
-		
+
 		$('#'+fieldId+'__div').offset({ top: offsetTop, left: fieldOffsetLeft });
-		
+
 		//Disable if editable is not set
 		if(!$('#'+fieldId).hasClass('editable') && !$('#'+fieldId).hasClass('searchable')){
 			$('#'+fieldId).attr('readonly', 'readonly');
 		}
 	});
-	
-	
+
+
 	// Handle selecting an option in the field
 	$(document).on('click focus', '.selectfielddiv div', function(){
 		var fieldId = $(this).parent('div').attr('id').replace(/\__div/g, '');
-		
+
 		$('#'+fieldId).removeAttr('readonly');
 		$('#'+fieldId).val($(this).html());
 		$('#'+fieldId).trigger('change'); // Make this look like the person has entered the stuff
@@ -101,15 +120,15 @@ $(function() {
 		}
 		// Also fill the hidden value for the field with the real value
 		$('#'+fieldId+'__hidden').val($(this).data('value'));
-		$(this).parent('div').fadeOut('fast'); 
+		$(this).parent('div').fadeOut('fast');
 	});
-	
-	
+
+
 	//Handle the select field loosing focus
 	$(document).on('focusout', '.selectfield', function(){
 		var fieldId = $(this).attr('id');
 		//Close the select div list if it was not the target of the next click
-		if(!$('#'+fieldId+'__div').is(":focus") && !$('#'+fieldId+'__div button').is(":focus")) 
+		if(!$('#'+fieldId+'__div').is(":focus") && !$('#'+fieldId+'__div button').is(":focus"))
     	{
        	 	$('#'+fieldId+'__div').fadeOut('fast');
 			// Now if this is searchable clear the field if it is not among the list of selectable options
@@ -118,7 +137,7 @@ $(function() {
 				var fieldValue = $(this).val();
 				var isIn = false;
 				$('#'+fieldId+'__div').children('div').each(function(){
-					if($(this).data('value') == fieldValue) 
+					if($(this).data('value') == fieldValue)
 					{
 						isIn = true;
 						return false;
@@ -130,68 +149,156 @@ $(function() {
     	}
 	});
 	
+
+
+
+// manage delete list tags 
+$(document).on('click','.textfieldlistitem',function(){
+	
+	strng ='';
+	items = $(this).val();
+	dataid = $(this).attr('datakey'); 
+	datadiv = $(this).attr('datadiv');
+	datahidden =  $(this).attr('datahidden');
+	
+	xc  = 0;	
+	strng = '';
+	
+		    $.each(arraydata, function(key,vale) {
+			xc ++;		
+			if(key == dataid){			 
+			delete arraydata[dataid];
+			}
+			else
+			{
+			 strng += '<div  class="textfieldlistitem"  id="ap_'+key+'" datadiv="'+datadiv+'" datakey="'+key+'" >'+vale+'</div>'
+			}
+			
+		});   
+		  
+	console.log(arraydata);
+	$("#"+datadiv).html(strng);
+	 		
+ 	console.log(arraydata);
+ 
+});
+//manage list tags tmis
+
+
+arraydata = {};
+strng = "";strngg="";
+datarecorder = '';
+$(document).on(	'click','.selectfielddiv .listtag ', function(){
+
+	var datav = $(this).data('value');
+	var datarecord = $(this).html()
+	var dataref = $(this).data('ref');
+	
+    if(dataref != datarecorder ){
+		arraydata = {};
+		datarecorder = dataref;
+	}
+		
+    //hidden_particulars
+	arraydata[datav] = datarecord;
+	$.each(arraydata, function(key,vale) {
+		strngg +=""+key+"|"+vale+",";
+	});
+
+$("#"+dataref).val(strngg);
+console.log(strng);
+
+strng ="";
+if($("#"+dataref+"_div").length > 0)
+{
+	$.each(arraydata, function(key,vale) {
+    //movers
+	strng += '<div  class="textfieldlistitem"  id="ap_'+key+'" datadiv="'+dataref+'_div" datakey="'+key+'" >'+vale+'</div>'
+	});
+	//$(this).parent('div').html(strng);strng ="";
+	$("#"+dataref+"_div").html(strng);
+}
+else
+{
+	$("#"+dataref).after("<br/><div id='"+dataref+"_div' class=''></div>");
+	$.each(arraydata, function(key,vale) {
+    //=""+key+"|"+vale+",";
+	strng += '<div  class="textfieldlistitem"  id="ap_'+key+'" datadiv="'+dataref+'_div" datakey="'+key+'" >'+vale+'</div>'
+	});
+
+    $("#"+dataref+"_div").html(strng);
+	strng ="";
+ }
+	console.log(arraydata);
+
+});
+
+/*function listtags(txt,txtid){
+alert('movers');
+}
+*/
 	// Handle cases where the select field is searchable
 	$(document).on('keyup', '.selectfield.searchable', function(){
 		var fieldId = $(this).attr('id');
 		var listType = fieldId.split('__').pop();
 		var searchValue = ($(this).val() != ''? '/search_by/'+replaceBadChars($(this).val()): '');
-		
+
 		updateFieldLayer(getBaseURL()+"page/get_custom_drop_list/type/"+listType+searchValue+addSelectVariables($(this)),'','',fieldId+'__div','');
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling simple form validation on the fly
 	// --------------------------------------------------------------------------------------------------------
-	
+
 	//Activate form submission if the required fields are filled in
 	$(document).on('change', '.simpleform input', function(e){
 		var activate = true;
 		var form = $(this).parents('.simpleform').first();
 		form.find('input').each(function(){
-			if(!$(this).hasClass('optional') 
-				&& $(this).attr('type') == 'text' 
+			if(!$(this).hasClass('optional')
+				&& $(this).attr('type') == 'text'
 				&& $(this).val().length < 3
 			){
-				activate = false; 
+				activate = false;
 				return false;
 			}
 		});
-		
+
 		//Now activate the form if the user has all fields filled
 		var formBtn = form.find('.submitbtn').first();
 		if(activate){
 			formBtn.attr('onclick',"postFormFromLayer('"+form.attr('id')+"')");
 			formBtn.removeClass('greybtn').addClass('btn');
-		} 
-		else 
+		}
+		else
 		{
 			formBtn.removeAttr('onclick');
 			formBtn.removeClass('btn').addClass('greybtn');
 		}
 	});
-	
+
 	$(document).on('click', '.submitbtn', function(){
 		if($(this).hasClass('greybtn')){
 			showServerSideFadingMessage('Enter all required fields to continue.');
 		}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling simple form validation after submit
 	// --------------------------------------------------------------------------------------------------------
@@ -199,14 +306,14 @@ $(function() {
 		var formId = $(this).attr('id');
 		var hasEmpty = "N";
 		var firstEmpty = "";
-		
+
 		$(this).find('input, textarea').each(function(){
-			if($(this).parents('.ignorearea').first().length == 0 && !$(this).hasClass('optional') && $(this).attr('type') != 'button' && $(this).attr('type') != 'hidden' && $(this).attr('type') != 'submit' 
-				&& (($(this).attr('type') == 'radio' && !$("input:radio[name='"+$(this).attr('name')+"']").is(":checked")) 
+			if($(this).parents('.ignorearea').first().length == 0 && !$(this).hasClass('optional') && $(this).attr('type') != 'button' && $(this).attr('type') != 'hidden' && $(this).attr('type') != 'submit'
+				&& (($(this).attr('type') == 'radio' && !$("input:radio[name='"+$(this).attr('name')+"']").is(":checked"))
 				|| ($(this).attr('type') != 'radio' && $(this).attr('type') != 'checkbox' && (
 						($(this).hasClass('email') && !isValidEmail($(this).attr('id'),''))
 						|| ($(this).hasClass('password') && !isValidPassword($(this).attr('id'),''))
-						|| ($(this).hasClass('futuredate') && !isFutureDate($(this).val())) 
+						|| ($(this).hasClass('futuredate') && !isFutureDate($(this).val()))
 						|| $(this).val().length < 2
 				)))
 			){
@@ -216,12 +323,12 @@ $(function() {
 				hasEmpty = "Y";
 			}
 		});
-		
+
 		//Now take the appropriate action
 		if(hasEmpty == "Y"){
 			//use custom message if provided
 			var msg = $('#'+formId).find('#errormessage').first().length? $('#'+formId).find('#errormessage').first().val(): 'Enter all required fields to continue.';
-			
+
 			showServerSideFadingMessage(msg);
 			$('#'+firstEmpty).focus();
 		} else {
@@ -232,18 +339,18 @@ $(function() {
 			});
 			return true;
 		}
-		
+
 		e.preventDefault();
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling actions on permanent address being the same as the contact address
 	// --------------------------------------------------------------------------------------------------------
@@ -274,20 +381,20 @@ $(function() {
 			}
 			$('#contactaddress').val('');
 		}
-		
-		
+
+
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
-	// Micro form functionality - picks fields in a zone with the class, submits them to a url specified in 
+	// Micro form functionality - picks fields in a zone with the class, submits them to a url specified in
 	// action field and shows the result in the specified results div.
 	// --------------------------------------------------------------------------------------------------------
 	$(document).on('click', '.microform button.submitmicrobtn', function(e){
@@ -298,18 +405,18 @@ $(function() {
 		var errorMessage = formContainer.find('#errormessage').first().length > 0? formContainer.find('#errormessage').first().val(): 'Enter all required fields to continue.';
 		var tempMessage = formContainer.find('#tempmessage').first().length > 0? formContainer.find('#tempmessage').first().val(): '';
 		var activate = true;
-		
+
 		inputs.each(function(){
 			if(!$(this).hasClass('optional') && $(this).hasClass('textfield') && (
 			($(this).hasClass('password') && !isValidPassword($(this).attr('id'),''))
 			|| ($(this).val().length < 1)
 			))
 			{
-				activate = false; 
+				activate = false;
 				return false;
 			}
 		});
-		
+
 		//Proceed if the required fields are all filled
 		if(inputs.length > 0 && activate)
 		{
@@ -322,7 +429,7 @@ $(function() {
        			url: action,
 				// How to handle getting the "form" data
       			data: (containsFileField? formContainer.serializeFiles(): inputs.serializeArray()),
-				
+
 				// What to do as the data is being processed
       			beforeSend: function() {
            			//Show a temporary message to show that the form is being worked on
@@ -338,7 +445,7 @@ $(function() {
 		   			if(tempMessage == '') showWaitDiv('end');
 					if(data.match(/php error/i) || data.match(/error:/i)) {
 						console.log(data);
-					
+
 						// Determine which error to show
 						//The script failed
 						if(data.indexOf('/>') > -1)
@@ -364,7 +471,7 @@ $(function() {
 								if($(this).attr('type') != 'hidden'){
 									$(this).val('').removeAttr('checked').removeAttr('selected');
 								}
-							
+
 								//If some fields were hidden because they should not be edited, show them again
 								if($(this).parent('div').length > 0 && $(this).parent('div').hasClass('hideonedit')){
 									$(this).parent('div').css('display','inline-block');
@@ -372,7 +479,7 @@ $(function() {
 								}
 							});
 						}
-						
+
 						//If certain hidden fields are specified for clearance after submission, put them on the button data-val
 						if(submitBtn.data('val')){
 							var fieldsToClear = submitBtn.data('val').split(',');
@@ -380,32 +487,32 @@ $(function() {
 								$('#'+fieldsToClear[i]).remove();
 							}
 						}
-						
+
 						// If it is for confirming the list selection, carry out certain special actions
 						if(submitBtn.hasClass('selectlistconfirmbtn')){
 							var parentDiv = submitBtn.parents('.selectlistdiv').first();
 							var containerDivId = 'input_'+parentDiv.attr('id');
-							
+
 							// 1. Hide all the list select checkboxes
-							$(document).find('.listcheckbox').each(function(){ 
+							$(document).find('.listcheckbox').each(function(){
 								//Uncheck all checked boxes
 								if($('#'+$(this).attr('for')).is(':checked')) $('#'+$(this).attr('for')).attr('checked', false);
 								//Then hide all checkboxes
 								$(this).hide('fast');
 							});
-							
-							// 2. Then hide the container 
+
+							// 2. Then hide the container
 							$('#'+containerDivId).html($('#'+containerDivId).data('default'));
 							parentDiv.fadeOut('fast');
 							$('#'+parentDiv.attr('id').split('__')[0]+'__btn').css('display','inline-block');
 						}
-						
+
 						//Finally show the results div
 						$("#"+resultsDiv).html(data).fadeIn('fast');
 					}
 				}
    			};
-			
+
 			//Add the ignore processing for file functions
 			if(containsFileField){
 				parameters['processData'] = false;
@@ -419,64 +526,64 @@ $(function() {
 			showServerSideFadingMessage(errorMessage);
 		}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling results list table actions
 	// --------------------------------------------------------------------------------------------------------
-	$(document).on('click', '.resultslisttable.editable .edit', function(e){	
+	$(document).on('click', '.resultslisttable.editable .edit', function(e){
 		// 1. Get the id of the clicked item from the row
 		var itemId = $(this).parents('tr').first().attr('id');
-		
+
 		// Clear color from all sibling rows and then color the row being edited
 		$(this).parents('.resultslisttable').first().find('tr').each(function(){
 			$(this).css('background-color', '');
 		});
 		$('#'+itemId).css('background-color', '#FFDF7D');
-		
+
 		// 2. Find the editing form
 		var resultsDivId = $(this).parents('.resultslisttable').first().parent('div').attr('id');
 		var editingFormDiv = $('body').find('input[value="'+resultsDivId+'"]').first().parents('.microform').first().parent('div').attr('id');
 		var listType = editingFormDiv.split('__').pop();
-		
+
 		// 3. Populate the editing form with the appropriate values from the session
 		updateFieldLayer(getBaseURL()+"register/edit_list_item/type/"+listType+"/item_id/"+itemId,'','',editingFormDiv,'');
-		
+
 	});
-	
-	
-	
-	$(document).on('click', '.resultslisttable.editable .delete', function(e){	
+
+
+
+	$(document).on('click', '.resultslisttable.editable .delete', function(e){
 		// 1. Get the id of the clicked item from the row
 		var itemId = $(this).parents('tr').first().attr('id');
-		
+
 		// 2. Find the editing form
 		var resultsDivId = $(this).parents('.resultslisttable').first().parent('div').attr('id');
 		var editingFormDiv = $('body').find('input[value="'+resultsDivId+'"]').first().parents('.microform').first().parent('div').attr('id');
 		var listType = editingFormDiv.split('__').pop();
-		
+
 		//Ask user to confirm if they want to delete the item
 		if(window.confirm('Are you sure you want to delete this '+listType+'?'))
 		{
 			updateFieldLayer(getBaseURL()+"register/delete_list_item/type/"+listType+"/item_id/"+itemId,'','',resultsDivId,'');
 		}
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Some unique button actions
 	// --------------------------------------------------------------------------------------------------------
@@ -511,15 +618,15 @@ $(function() {
 	$(document).on('click', '.addicon', function(e){
 		document.location.href = getBaseURL()+$(this).data('url');
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling editable content
 	// --------------------------------------------------------------------------------------------------------
@@ -530,85 +637,85 @@ $(function() {
 			$('.editdiv').css('display', 'block');
 			$(this).fadeOut('fast');
 		}
-	
-	
+
+
 	});
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	// --------------------------------------------------------------------------------------------------------
 	// Handling a file upload field
 	// Example file field is given in the format
 	// data-val specifies a comma delimited list of allowed file types
 	// data-size specifies the size limit in kB for files uploaded using the field. If not given it is limited to 100kB.
-	// 
+	//
 	// <input type="text" id="fieldname" name="fieldname" data-val="jpg,jpeg,gif,png,tiff" [OPTIONAL data-size="500"] class="filefield" value=""/>
 	// --------------------------------------------------------------------------------------------------------
 	$(document).on('click focus', '.filefield', function(e){
 		// Disable to prevent bogus files names
 		$(this).prop("readonly",true);
 		var fileId = $(this).attr('id');
-		
+
 		// 1. Find if the field's actual file field exists. Create it if it does not.
 		if(!($(this).parent().find('input[type="file"]').first().length > 0 && $(this).parent().find('input[type="file"]').first().attr('id') == fileId+'__fileurl')){
-			
+
 			$(this).after("<input type='file' id='"+fileId+"__fileurl' name='"+fileId+"__fileurl' class='filefieldurl' style='display:none;' value='' />");
 		}
 		$('#'+fileId+'__fileurl').click();
 	});
-	
+
 	// What happens when the file is uploaded
 	$(document).on('change', '.filefieldurl', function(e){
 		var parentFieldId = $(this).attr('id').replace(/\__fileurl/g, '');
-		
+
 		// Get the allowed file formats
 		var allowedFormats = $('#'+parentFieldId).data('val').split(',');
 		var uploadedFileUrl = $(this).val();
 		var uploadedFileExtension = uploadedFileUrl.split('.').pop().toLowerCase();
-		
+
 		// Get the allowed file size for this file field, otherwise default to 100kB
 		var allowedSize = typeof $('#'+parentFieldId).data('size') !== 'undefined'? +$('#'+parentFieldId).data('size'): 100;
-		
+
 		// Proceed if the file in is the allowed formats and within allowed size
 		if(allowedFormats.indexOf(uploadedFileExtension) != -1 && $(this)[0].files[0].size <= (allowedSize*1024)){
 			$('#'+parentFieldId).val(uploadedFileUrl.split('/').pop());
-			
+
 		} else {
 			var msg = $(this)[0].files[0].size > (allowedSize*1024)? 'The uploaded file exceeds allowed size.': 'The uploaded file format is not valid.';
-			
+
 			//Clear the invalid file url uploaded
 			$(this).val('');
 			$('#'+parentFieldId).val('');
 			showServerSideFadingMessage(msg);
 		}
-		
+
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-});	
-	
-	
-	
-	
-	
 
 
-	
-	
-	
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
 // --------------------------------------------------------------------------------------------------------
 // Handles processing a form with a file field in it before submission asynchronously
 // --------------------------------------------------------------------------------------------------------
@@ -630,10 +737,10 @@ $.fn.serializeFiles = function() {
 		}
 	}
 
-	var formdata = new FormData();  
+	var formdata = new FormData();
 	if (formdata) {
     	// you can use the array notation of your input's `name` attribute here
-    	$.each(files, function(fieldname, element) { 
+    	$.each(files, function(fieldname, element) {
 			formdata.append(fieldname, element);
 		});
 	}
@@ -648,30 +755,30 @@ $.fn.serializeFiles = function() {
 
 
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 // Get custom additional fields to be passed with a select field
 function addSelectVariables(selectObj)
 {
 	var addnValues = "";
-	
+
 	if(selectObj.data('val')){
 		var fields = selectObj.data('val').split('|');
 		for(var i=0; i<fields.length; i++){
 			addnValues += '/'+fields[i]+'/'+replaceBadChars($('#'+fields[i]).val());
 		}
 	}
-	
+
 	return addnValues;
 }
-	
-	
-	
-	
+
+
+
+
 
 
 
@@ -694,25 +801,19 @@ function postFormFromLayer(formId)
 			$("#"+fieldId+'__resultsdiv').html(data);
 		}
    	});
-	
+
 	if(!$('#'+fieldId+'__ignorepostprocessing').length)
 	{
 		$('#'+fieldId+'__resultsdiv').hide('fast');
-	
+
 		//Now show what needs to be shown to the user in their field
 		var fields = $("#"+fieldId+'__response_fields').val().split('|');
 		var response = "";
 		$.each(fields, function( index, value ){
 			response += ($('#'+value).length && $('#'+value).val().length > 0)? (index > 0? ", ": "")+$('#'+value).val(): "";
 		});
-	
+
 		$('#'+fieldId).val(response);
-		$('#'+fieldId+'__div').fadeOut('fast');	
+		$('#'+fieldId+'__div').fadeOut('fast');
 	}
 }
-
-
-
-
-
-

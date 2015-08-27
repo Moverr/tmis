@@ -27,7 +27,6 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 			}
 		break;
 
-
 		case "institutions":
 			$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
 			$searchQuery = !empty($searchString)? " (MATCH(name) AGAINST('+".implode(" +",explode(" ",$searchString))."') OR name LIKE '".$searchString."%' OR name LIKE '% ".$searchString."%') ": " 1=1 ";
@@ -200,10 +199,26 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 
 
 		case "grades":
-			$grades = $obj->_query_reader->get_list('get_teacher_grades');
+		    $searchstring = '';
+			if(!empty($more['category']))
+			{
+				$searchString = ' AND grade_category = "'.$more['category'].'" ';
+				//SEARCHSTRING
+			}
+			$grades = $obj->_query_reader->get_list('get_teacher_grades',array('searchstring'=>$searchString));
 			foreach($grades AS $row)
 			{
 				$optionString .= "<div data-value='".$row['value']."'>".$row['display']."</div>";
+			}
+		break;
+		
+		
+		case "categories":
+		#exit("reached");	
+			$grades = $obj->_query_reader->get_list('grade_category');
+			foreach($grades AS $row)
+			{
+				$optionString .= "<div data-value='".$row['value']."' class='grade_category'  >".$row['display']."</div>";
 			}
 		break;
 
@@ -344,7 +359,7 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 		break;
 
 
-    // fetch subject specializations from teaching_subject table.
+        #fetch subject specializations from teaching_subject table.
 		case "subjectspecialization":
 		$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
 		$searchQuery = !empty($searchString)? " AND subject LIKE '".$searchString."%' ": "";
@@ -355,6 +370,44 @@ function get_option_list($obj, $list_type, $return = 'div', $searchBy="", $more=
 		{
 			$optionString .= "<div data-value='".$row['id']."' onclick=\"universalUpdate('subject', '".$row['id']."')\">".$row['subject']."</div>";
 		}
+		break;
+
+
+		#fetch courses offered
+		case 'courses':
+		
+		//$optionString .="<div>Courses</div>";
+		$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
+		$searchQuery = !empty($searchString)? " AND name LIKE '".$searchString."%' ": "";
+		$orderBy = " ORDER BY name ASC";
+		$subjects = $obj->_query_reader->get_list('fetch_courses', array('search_query'=>$searchQuery, 'order_by'=>$orderBy, 'limit_text'=>'100'));
+
+		foreach($subjects AS $row)
+		{
+			//$optionString .= "<div data-value='".$row['id']."' onclick=\"universalUpdate('course', '".$row['id']."')\">".$row['name']."</div>";
+			$optionString .= "<div  data-ref=\"hidden_courses\" class=\"listtag\" data-value='".$row['id']."' onclick=\"listtags('".$row['name']."', '".$row['id']."');\">".$row['name']."</div>";
+		}
+		
+		break;
+
+
+		#fetch particulars
+		case 'particulars':
+		$searchString = !empty($searchBy)? htmlentities(restore_bad_chars($searchBy), ENT_QUOTES): "";
+		$searchQuery = !empty($searchString)? " AND tags.parent_type like 'institution' AND tags.name LIKE '".$searchString."%' ": " AND tags.parent_type like 'institution' ";
+		$orderBy = " ORDER BY tags.name ASC";
+		$subjects = $obj->_query_reader->get_list('get_list_tags', array('search_query'=>$searchQuery, 'order_by'=>$orderBy, 'limit_text'=>'100'));
+
+		foreach($subjects AS $row)
+		{
+			$optionString .= "<div  data-ref=\"hidden_particulars\" class=\"listtag\" data-value='".$row['id']."' onclick=\"listtags('".$row['name']."', '".$row['id']."');\">".$row['name']."</div>";
+		}
+		break;
+
+
+		//fetch highest class list
+		case 'highestclass':
+		$optionString .="<div>Highest Class </div>";
 		break;
 
 

@@ -19,6 +19,7 @@ class _school extends CI_Model
 	# Add a new school
 	function add_new($schoolDetails)
 	{
+		#print_r($schoolDetails); exit();
 		$isAdded = false;
 		$required = array('schoolname', 'schooltype__schooltypes', 'dateschoolregistered', 'schooltelephone', 'schooladdress__addressline');
 		

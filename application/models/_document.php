@@ -14,12 +14,19 @@ class _document extends CI_Model
 	# Generate a letter with the passed details
 	function generate_letter($code, $details, $action='save', $return='filename')
 	{
+		/*
+		print_r($code);
+		echo "Inside GEnerate Letter";
+		print_r($details);
+		exit();   */
+	#	if(!empty($details))
 		# 1. Generate the letter name
 		$letterUrl = 'file_'.strtotime('now').'.pdf';
 		$location = UPLOAD_DIRECTORY.'documents/';
 		
 		# 2. Load the letter details from the database
 		$template = $this->get_template_by_code($code);
+	#	print_r($template); exit();
 		# 3. Generate the document from the template
 		$document = $this->populate_template($template, $details);
 		

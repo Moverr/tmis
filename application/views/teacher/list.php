@@ -60,14 +60,14 @@ if(!empty($list))
 	
 	if($action == 'payrollreport')
 	{
-		echo "<td>".$row['file_number']."</td>
+	  echo "<td>".$row['file_number']."</td>
 			<td>".$row['name']."</td>
 			<td>".$row['title']."</td>
 			<td>".$row['salary_scale']."</td>
 			<td>".format_date($row['date_of_birth'],'d-M-Y')."</td>
 			<td>".$row['teacher_status']."</td>
 			<td>".format_date($row['proposed_retirement'],'d-M-Y').$stop."</td>
-			</tr>";
+		   </tr>";
 	}
 	else if($action == 'cimreport')
 	{

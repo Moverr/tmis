@@ -72,6 +72,8 @@ class _messenger extends CI_Model {
 		if(!empty($userId))
 		{
 			$user = $this->_query_reader->get_row_as_array('get_user_profile', array('user_id'=>$userId));
+			#print_r($user);
+			#exit();
 			if(!empty($user))
 			{
 				$emailaddress = $user['email_address'];

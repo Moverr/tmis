@@ -203,6 +203,7 @@ class Page extends CI_Controller
 	function get_custom_drop_list()
 	{
 		$data = filter_forwarded_data($this);
+	 
 
 		if(!empty($data['type'])){
 			$searchBy = !empty($data['search_by'])? $data['search_by']: '';

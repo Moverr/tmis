@@ -309,6 +309,8 @@ class _teacher extends CI_Model
 					$instructions = process_other_field($instructions);
 					$details['effectivedate'] = $instructions['effectivedate'];
 					$details['grade__grades'] = $instructions['grade__grades'];
+					#print_r($details['grade__grades']);
+					#exit();
 					
 					$result = $this->_approval_chain->add_chain($instructions['id'], 'registration', '3', 'approved', (!empty($instructions['reason'])? htmlentities($instructions['reason'], ENT_QUOTES): ''), $details);
 					

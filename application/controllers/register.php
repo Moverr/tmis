@@ -24,6 +24,7 @@ class Register extends CI_Controller
 	{
 		$data = filter_forwarded_data($this);
 		
+		
 		# Are you just editing the step for preview?
 		if(!empty($data['action']) && $data['action'] == 'edit_preview')
 		{
